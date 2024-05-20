@@ -147,4 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 366950884651669841}
-  multiplier1: {fileID: 349226772551769137}
+  _minValueClons: 2
+  _maxValueClons: 6
+  _chanceSplit: 100
