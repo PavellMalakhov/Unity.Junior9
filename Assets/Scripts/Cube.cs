@@ -4,14 +4,16 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(MeshRenderer))]
 
-public class Multiplier : MonoBehaviour
+public class Cube : MonoBehaviour
 {
     [SerializeField] private int _minValueClons;
     [SerializeField] private int _maxValueClons;
     [SerializeField] private int _chanceSplit;
+    [SerializeField] private Cube _cube;
 
     private float _explosionForce = 300;
     private float _explosionRadius = 1;
+    private List<GameObject> _cubes = new();
 
     private void OnMouseUpAsButton()
     {
@@ -22,36 +24,34 @@ public class Multiplier : MonoBehaviour
         bool isSplit = Random.Range(chanceSplitMinValue, chanceSplitMaxValue) <= _chanceSplit;
         int cubeValue = Random.Range(_minValueClons, _maxValueClons);
 
-        List<GameObject> cubes = new();
-
         if (isSplit)
         {
-            for (int i = 0; i < cubeValue; i++)
-            {
-                cubes.Add(Instantiate(gameObject));
-            }
-        }
-
-        foreach (var cube in cubes)
-        {
-            Init(cube, multiplier);
+            Init(multiplier, cubeValue);
         }
 
         Destroy(gameObject);
     }
 
-    private void Init(GameObject cube, int multiplier)
+    private void Init(int multiplier, int cubeValue)
     {
-        cube.transform.localScale = transform.localScale / multiplier;
+        _cube._chanceSplit /= multiplier;
 
-        cube.GetComponent<Multiplier>()._chanceSplit /= multiplier;
+        for (int i = 0; i < cubeValue; i++)
+        {
+            _cubes.Add(Instantiate(gameObject));
+        }
 
-        cube.GetComponent<MeshRenderer>().material.color = GetColor();
+        foreach (var cube in _cubes)
+        {
+            cube.transform.localScale /= multiplier;
 
-        cube.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+            cube.GetComponent<MeshRenderer>().material.color = GetRandomColor();
+
+            cube.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+        }
     }
 
-    private Color GetColor()
+    private Color GetRandomColor()
     {
         float colorChannelR = Random.value;
         float colorChannelG = Random.value;
