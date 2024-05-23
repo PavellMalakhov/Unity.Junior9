@@ -32,6 +32,10 @@ public class Cube : MonoBehaviour
                 cube.Init(multiplier);
             }
         }
+        else
+        {
+            GetComponent<Exploder>().ExplodeNotSplit();
+        }
 
         Destroy(gameObject);
     }

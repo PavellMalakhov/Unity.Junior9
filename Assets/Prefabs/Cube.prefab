@@ -164,4 +164,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 3384403441971625468}
   _explosionForce: 300
-  _explosionRadius: 1
+  _explosionRadius: 4
