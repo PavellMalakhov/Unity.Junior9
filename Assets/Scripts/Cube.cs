@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(MeshRenderer))]
 
 public class Cube : MonoBehaviour
@@ -9,11 +8,6 @@ public class Cube : MonoBehaviour
     [SerializeField] private int _minValueClons;
     [SerializeField] private int _maxValueClons;
     [SerializeField] private int _chanceSplit;
-    [SerializeField] private Cube _cube;
-
-    private float _explosionForce = 300;
-    private float _explosionRadius = 1;
-    private List<GameObject> _cubes = new();
 
     private void OnMouseUpAsButton()
     {
@@ -26,29 +20,31 @@ public class Cube : MonoBehaviour
 
         if (isSplit)
         {
-            Init(multiplier, cubeValue);
+            List<Cube> cubes = new();
+
+            for (int i = 0; i < cubeValue; i++)
+            {
+                cubes.Add(Instantiate(this));
+            }
+
+            foreach (var cube in cubes)
+            {
+                cube.Init(multiplier);
+            }
         }
 
         Destroy(gameObject);
     }
 
-    private void Init(int multiplier, int cubeValue)
+    private void Init(int multiplier)
     {
-        _cube._chanceSplit /= multiplier;
+        this._chanceSplit /= multiplier;
 
-        for (int i = 0; i < cubeValue; i++)
-        {
-            _cubes.Add(Instantiate(gameObject));
-        }
+        transform.localScale /= multiplier;
 
-        foreach (var cube in _cubes)
-        {
-            cube.transform.localScale /= multiplier;
+        GetComponent<MeshRenderer>().material.color = GetRandomColor();
 
-            cube.GetComponent<MeshRenderer>().material.color = GetRandomColor();
-
-            cube.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-        }
+        GetComponent<Exploder>().Explode();
     }
 
     private Color GetRandomColor()

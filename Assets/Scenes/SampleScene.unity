@@ -635,6 +635,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 17.78, y: 0, z: 0}
+--- !u!114 &1351321062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3707484096312305600, guid: 45ced98f01a555040ab8c274114ff636, type: 3}
+  m_PrefabInstance: {fileID: 394627124353636046}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af321bae66822c49997176b8350344d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1716531321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1118,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7487692571549242324, guid: 45ced98f01a555040ab8c274114ff636, type: 3}
+      propertyPath: _exploder
+      value: 
+      objectReference: {fileID: 1351321062}
     - target: {fileID: 8754046612502050735, guid: 45ced98f01a555040ab8c274114ff636, type: 3}
       propertyPath: m_Name
       value: Cube
