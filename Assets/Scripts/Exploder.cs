@@ -9,12 +9,17 @@ public class Exploder : MonoBehaviour
     [SerializeField] private float _explosionForce = 300;
     [SerializeField] private float _explosionRadius = 4;
 
-    public void Explode()
+    public void Explode(List<Cube> cubes)
     {
-        _rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+        List<Rigidbody> RbCubes = new();
+
+        foreach (var cube in RbCubes)
+        {
+            cube.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+        }
     }
 
-    public void ExplodeNotSplit()
+    public void ExplosionInRadius()
     {
         Collider[] cubeshits = Physics.OverlapSphere(transform.position, _explosionRadius);
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Exploder))]
 
 public class Cube : MonoBehaviour
 {
@@ -31,10 +32,12 @@ public class Cube : MonoBehaviour
             {
                 cube.Init(multiplier);
             }
+
+            GetComponent<Exploder>().Explode(cubes);
         }
         else
         {
-            GetComponent<Exploder>().ExplodeNotSplit();
+            GetComponent<Exploder>().ExplosionInRadius();
         }
 
         Destroy(gameObject);
@@ -42,13 +45,11 @@ public class Cube : MonoBehaviour
 
     private void Init(int multiplier)
     {
-        this._chanceSplit /= multiplier;
+        _chanceSplit /= multiplier;
 
         transform.localScale /= multiplier;
 
         GetComponent<MeshRenderer>().material.color = GetRandomColor();
-
-        GetComponent<Exploder>().Explode();
     }
 
     private Color GetRandomColor()
