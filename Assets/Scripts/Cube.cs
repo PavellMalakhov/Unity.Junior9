@@ -3,12 +3,20 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Exploder))]
+[RequireComponent(typeof(Rigidbody))]
 
 public class Cube : MonoBehaviour
 {
     [SerializeField] private int _minValueClons;
     [SerializeField] private int _maxValueClons;
     [SerializeField] private int _chanceSplit;
+
+    private Exploder _exploder;
+
+    private void Awake()
+    {
+        _exploder = GetComponent<Exploder>();
+    }
 
     private void OnMouseUpAsButton()
     {
@@ -22,6 +30,7 @@ public class Cube : MonoBehaviour
         if (isSplit)
         {
             List<Cube> cubes = new();
+            List<Rigidbody> rigidbodyCubes = new();
 
             for (int i = 0; i < cubeValue; i++)
             {
@@ -31,13 +40,14 @@ public class Cube : MonoBehaviour
             foreach (var cube in cubes)
             {
                 cube.Init(multiplier);
+                rigidbodyCubes.Add(cube.GetComponent<Rigidbody>());
             }
 
-            GetComponent<Exploder>().Explode(cubes);
+            _exploder.Explode(rigidbodyCubes);
         }
         else
         {
-            GetComponent<Exploder>().ExplosionInRadius();
+            _exploder.ExplodeInRadius();
         }
 
         Destroy(gameObject);
